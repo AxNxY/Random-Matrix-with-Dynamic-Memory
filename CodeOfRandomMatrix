@@ -1,0 +1,78 @@
+#include <iostream>
+#include <new>
+#include <climits>
+#include <ctime>
+using namespace std ;
+
+
+int** randomMatrix(int &rows, int &cols)   // ??
+{
+    cols = (rand() % 10) + 1 ;     //başlarına tekrar int gerekmiyor
+    rows = (rand() % 10) + 1 ; 
+ 
+ 
+    int ** mat = new(nothrow) int*[rows];
+    if(mat != nullptr)                                       //int matrix[rows][cols];    // yeri yokk nerden geldi bu ben oluşturdummmm dikkat 
+    {
+        for (int i=0; i<rows; i++) 
+        {
+            mat[i] = new (nothrow) int[cols];
+            if (mat[i] == nullptr)
+                return nullptr;
+        }
+    }
+ 
+ 
+ 
+ 
+    for(int x = 0 ; x < rows; x++)
+    {
+        for(int j = 0 ; j < cols ; j++)
+        {
+            mat[x][j] = (rand() % INT_MAX) + 1;
+        }
+    }
+ 
+ 
+    return mat ; 
+    
+}
+
+
+void printMatrix( int** mat, int rows, int cols)
+{
+    
+    for(int x = 0 ; x < rows; x++)
+    {
+        for(int j = 0 ; j < cols ; j++)
+        {
+            cout << mat[x][j] <<" | " ;
+        }
+        cout << endl ;
+        cout <<"----------------------------------------------"<< endl;
+    }
+    
+} 
+
+
+void deleteMatrix(int ** mat , int rows)
+{
+    for(int x = 0 ; x < rows; x++)
+    {
+        delete[] mat[x];
+    }
+    delete[] mat;
+}
+
+ 
+int main()
+{
+    int r = 0, c = 0;
+    int** m = randomMatrix(r, c);
+    if (m != nullptr)
+    {
+        printMatrix(m, r, c);
+        deleteMatrix(m, r);
+    }
+    
+}
